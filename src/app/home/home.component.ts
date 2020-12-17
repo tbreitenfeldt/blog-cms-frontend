@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { PrimaryComponent } from '../interfaces/primary-component';
 
 @Component({
   selector: 'app-home',
