@@ -9,6 +9,7 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { BlogPostListComponent } from './blog-post-list/blog-post-list.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     NavigationBarComponent,
     FooterComponent,
     HeaderComponent,
+    BlogPostListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [

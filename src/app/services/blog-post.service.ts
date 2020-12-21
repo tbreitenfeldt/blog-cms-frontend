@@ -7,7 +7,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { BlogPostHeader } from '../interfaces/blog-post-header';
+import { PaginatedPostHeaders } from '../interfaces/paginated-post-headers';
 import { BlogPost } from '../interfaces/blog-post';
 import { BlogPostRequest } from '../interfaces/blog-post-request';
 
@@ -25,23 +25,26 @@ export class BlogPostService {
   getAllPosts(
     pageNumber: number,
     pageSize: number
-  ): Observable<BlogPostHeader[]> {
+  ): Observable<PaginatedPostHeaders> {
     let params = new HttpParams();
     params = params.append('pageNumber', pageNumber.toString());
     params = params.append('pageSize', pageSize.toString());
-    return this.httpClient.get<BlogPostHeader[]>(`${this.apiUrl}/api/posts`, {
-      params: params,
-    });
+    return this.httpClient.get<PaginatedPostHeaders>(
+      `${this.apiUrl}/api/posts`,
+      {
+        params: params,
+      }
+    );
   }
 
   getAuthorPosts(
     pageNumber: number,
     pageSize: number
-  ): Observable<BlogPostHeader[]> {
+  ): Observable<PaginatedPostHeaders> {
     let params = new HttpParams();
     params = params.append('pageNumber', pageNumber.toString());
     params = params.append('pageSize', pageSize.toString());
-    return this.httpClient.get<BlogPostHeader[]>(
+    return this.httpClient.get<PaginatedPostHeaders>(
       `${this.apiUrl}/api/author/posts`,
       {
         params: params,
@@ -53,14 +56,17 @@ export class BlogPostService {
     title: string,
     pageNumber: number,
     pageSize: number
-  ): Observable<BlogPostHeader[]> {
+  ): Observable<PaginatedPostHeaders> {
     let params = new HttpParams();
     params = params.append('title', title);
     params = params.append('pageNumber', pageNumber.toString());
     params = params.append('pageSize', pageSize.toString());
-    return this.httpClient.get<BlogPostHeader[]>(`${this.apiUrl}/api/posts`, {
-      params: params,
-    });
+    return this.httpClient.get<PaginatedPostHeaders>(
+      `${this.apiUrl}/api/posts`,
+      {
+        params: params,
+      }
+    );
   }
 
   getBlogPost(id: number): Observable<BlogPost> {
