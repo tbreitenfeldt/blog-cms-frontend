@@ -1,12 +1,14 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,12 @@ import { HeaderComponent } from './header/header.component';
     FooterComponent,
     HeaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [Title],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [
+    Title,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: 'api_url', useValue: 'http://localhost:8080' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
