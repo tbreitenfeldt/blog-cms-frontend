@@ -28,6 +28,7 @@ export class BlogPostListComponent implements OnInit, OnChanges {
   @Input() filterByAuthor: boolean = false;
   @Input() pageSize: number = 10;
   @Input() showPaginationLinks: boolean = true;
+  @ViewChild('postSearchInput', { static: true }) postSearchInput: ElementRef;
   resultsHeaderTitle: string;
   pageNumber: number = 0;
   totalItems: number;
@@ -35,7 +36,6 @@ export class BlogPostListComponent implements OnInit, OnChanges {
   posts: BlogPostHeader[];
   isLoading: boolean;
   errorMessage: string;
-  @ViewChild('postSearchInput') postSearchInput: ElementRef;
 
   constructor(private blogPostService: BlogPostService) {}
 
@@ -52,8 +52,13 @@ export class BlogPostListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.posts) {
-      this.resultsHeaderTitle = this.getResultsHeaderTitle();
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        switch (propName) {
+          case 'posts':
+            this.resultsHeaderTitle = this.getResultsHeaderTitle();
+        }
+      }
     }
   }
 
@@ -159,11 +164,12 @@ export class BlogPostListComponent implements OnInit, OnChanges {
   }
 
   getResultsHeaderTitle(): string {
+    alert('hello world.');
     if (this.isLoading) {
       return 'Loading...';
     } else if (this.errorMessage) {
       return 'Error';
-    } else {
+    } else if (this.posts != null) {
       return `${this.posts.length} Posts`;
     }
   }
