@@ -5,11 +5,17 @@ import {
 } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  retry,
+} from 'rxjs/operators';
 
 import { PaginatedPostHeaders } from '../interfaces/paginated-post-headers';
 import { BlogPost } from '../interfaces/blog-post';
 import { BlogPostRequest } from '../interfaces/blog-post-request';
+import { BlogPostHeader } from '../interfaces/blog-post-header';
 
 @Injectable({
   providedIn: 'root',
@@ -52,17 +58,11 @@ export class BlogPostService {
     );
   }
 
-  searchPostsByTitle(
-    title: string,
-    pageNumber: number,
-    pageSize: number
-  ): Observable<PaginatedPostHeaders> {
+  searchPostsByTitle(title: string): Observable<BlogPostHeader[]> {
     let params = new HttpParams();
     params = params.append('title', title);
-    params = params.append('pageNumber', pageNumber.toString());
-    params = params.append('pageSize', pageSize.toString());
-    return this.httpClient.get<PaginatedPostHeaders>(
-      `${this.apiUrl}/api/posts`,
+    return this.httpClient.get<BlogPostHeader[]>(
+      `${this.apiUrl}/api/posts/search`,
       {
         params: params,
       }

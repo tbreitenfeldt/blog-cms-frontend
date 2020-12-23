@@ -1,1 +1,30 @@
-<p>blog-post-list works!</p>
+<main>
+  <div id="form-control-group">
+    <label for="searchPosts">Search:</label>
+    <input
+      type="search"
+      id="searchPosts"
+      class="form-control"
+      #postSearchInput
+    />
+  </div>
+
+  <div id="resultsHeader" aria-live="polite">
+    <h3>{{ resultsHeaderTitle }}</h3>
+  </div>
+
+  <div id="error-message" *ngIf="errorMessage">
+    {{ error - message }}
+  </div>
+
+  <div id="content" $ngIf="!errorMessage && !isLoading && posts">
+    <div *ngFor="let post; in: posts">
+      <h4>{{ post.title }}</h4>
+      <p>
+        By {{ post.username }}<br />
+        ULast Updated on: {{ post.updatedOn }}
+      </p>
+      <hr />
+    </div>
+  </div>
+</main>
